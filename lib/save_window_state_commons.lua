@@ -8,7 +8,7 @@ function format_window_size_db_key()
     --Guess work how to separate different windows
 
     -- remove all before ' - ' inclusive and words with non alphanumeric values
-    res, count = string.gsub( str , ".* %- ", ""):gsub("%w*[\\%^%$%(%)%%%.%[%]%*%+%-%?%/]%w*","")
+    res, count = string.gsub( get_window_name() , ".* %- ", ""):gsub("%w*[\\%^%$%(%)%%%.%[%]%*%+%-%?%/]%w*","")
 
     -- -- discard when contains '/'
     -- if string.find( res, '.*%/' ) ~= nil then

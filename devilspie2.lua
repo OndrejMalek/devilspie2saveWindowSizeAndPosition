@@ -1,3 +1,3 @@
 scripts_window_close = {
-    "onWindowClosed.lua"
+    "save_window_state.lua"
  }
