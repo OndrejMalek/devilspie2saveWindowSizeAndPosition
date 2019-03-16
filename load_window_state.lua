@@ -20,11 +20,11 @@ if saved_state ~= nil then
     end
 
     if  saved_state.get_window_is_maximized_vertically  then
-        maximized_vertically() 
+        maximize_vertically() 
     end
 
     if  saved_state.get_window_is_maximized_horizontally  then
-        maximized_horizontally() 
+        maximize_horizontally() 
     end
 
 

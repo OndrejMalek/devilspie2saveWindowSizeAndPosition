@@ -8,7 +8,7 @@ local function save_to_file(key)
         last_modified_epoch = os.time(),
         get_window_name = get_window_name() ,
         get_window_has_name = get_window_has_name() ,
-        get_application_name = get_application_name() ,
+        -- get_application_name = get_application_name() , -- not available on Cinammon
         get_class_instance_name = get_class_instance_name() ,
         get_window_geometry = { get_window_geometry() } ,
         get_window_client_geometry = {get_window_client_geometry()} ,
@@ -18,7 +18,7 @@ local function save_to_file(key)
         get_window_type = get_window_type() ,
         get_window_role = get_window_role() ,
         get_window_xid = get_window_xid() ,
-        get_window_class = get_window_class() ,
+        -- get_window_class = get_window_class() ,
         get_workspace_count = get_workspace_count() ,
         get_screen_geometry = {get_screen_geometry()}
     }
@@ -67,9 +67,28 @@ local function sortByIndex (a, b )
     end
 end
 
+--- Check if a file or directory exists in this path
+function exists(file)
+    local ok, err, code = os.rename(file, file)
+    if not ok then
+       if code == 13 then
+          -- Permission denied, but it exists
+          return true
+       end
+    end
+    return ok, err
+ end
+ 
+ --- Check if a directory exists in this path
+ function isdir(path)
+    -- "/" works on both Unix and Windows
+    return exists(path.."/")
+ end
 
 
-os.execute("mkdir saved_state")
+if not isdir("saved_state") then
+    os.execute("mkdir saved_state")
+end
 
 window_sizes_table,err = table.load(get_window_sizes_file())
 if window_sizes_table == nil then
