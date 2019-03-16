@@ -1,14 +1,12 @@
 dofile( "lib/table.save-1.0.lua" )
+local commons = require("lib.save_window_state_commons")
 
-local window_sizes_file = "saved_state/window_sizes_db.lua"
-local window_sizes_table,err = table.load(window_sizes_file)
+local window_sizes_table,err = table.load(get_window_sizes_file())
 if window_sizes_table == nil then
     window_sizes_table = {}
 end
 
-
-saved_state =  window_sizes_table[get_class_instance_name()]
-
+saved_state =  window_sizes_table[format_window_size_db_key()]
 set_window_geometry( 
     saved_state.get_window_geometry[1],
     saved_state.get_window_geometry[2],
