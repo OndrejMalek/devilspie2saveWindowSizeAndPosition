@@ -1,5 +1,6 @@
-dofile( "lib/table.save-1.0.lua" )
-local commons = require("lib.save_window_state_commons")
+cwd = debug.getinfo(1).source:match("@?(.*/)")
+dofile( cwd.."lib/table.save-1.0.lua" )
+local commons = dofile(cwd.."lib/save_window_state_commons.lua")
 
 local window_sizes_table,err = table.load(get_window_sizes_file())
 if window_sizes_table == nil then

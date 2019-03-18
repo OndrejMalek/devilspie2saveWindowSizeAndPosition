@@ -1,6 +1,7 @@
 -- On window closed save windows state
-dofile( "lib/table.save-1.0.lua" )
-local commons = require("lib.save_window_state_commons")
+cwd = debug.getinfo(1).source:match("@?(.*/)")
+dofile(cwd.."lib/table.save-1.0.lua")
+dofile(cwd.."lib/save_window_state_commons.lua")
 
 local function save_to_file(key)
     curent_state =  {
@@ -18,7 +19,7 @@ local function save_to_file(key)
         get_window_type = get_window_type() ,
         get_window_role = get_window_role() ,
         get_window_xid = get_window_xid() ,
-        -- get_window_class = get_window_class() ,
+        -- get_window_class = get_window_class() , -- not available on Cinammon
         get_workspace_count = get_workspace_count() ,
         get_screen_geometry = {get_screen_geometry()}
     }
