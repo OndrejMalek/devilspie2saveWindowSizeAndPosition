@@ -8,14 +8,24 @@ function format_window_size_db_key()
     --Guess work how to separate different windows
 
     -- remove all before ' - ' inclusive and words with non alphanumeric values
-    res, count = string.gsub( get_window_name() , ".* %- ", ""):gsub("%w*[\\%^%$%(%)%%%.%[%]%*%+%-%?%/]%w*","")
+    if get_window_name() ~= nil then
+        res, count = string.gsub( get_window_name() , ".* %- ", ""):gsub("%w*[\\%^%$%(%)%%%.%[%]%*%+%-%?%/]%w*","")
+    end
 
     -- -- discard when contains '/'
     -- if string.find( res, '.*%/' ) ~= nil then
     --     res = ""
     -- end
 
-    return get_class_instance_name() .. " " .. res .. get_window_type()
+    return nil_to_str(get_class_instance_name()) .. " " .. nil_to_str(res) .. nil_to_str(get_window_type())
+end
+
+function nil_to_str( str )
+    if str == nil then
+        return ""
+    else
+        return str
+    end
 end
 
 return{

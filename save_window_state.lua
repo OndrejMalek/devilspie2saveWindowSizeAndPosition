@@ -1,5 +1,13 @@
 -- On window closed save windows state
-cwd = debug.getinfo(1).source:match("@?(.*/)")
+function nil_to_str( str )
+    if str == nil then
+        return ""
+    else
+        return str
+    end
+end
+
+cwd = nil_to_str(debug.getinfo(1).source:match("@?(.*/)"))
 dofile(cwd.."lib/table.save-1.0.lua")
 dofile(cwd.."lib/save_window_state_commons.lua")
 
@@ -26,6 +34,8 @@ local function save_to_file(key)
     window_sizes_table[ key ] = curent_state
     
     table.save(window_sizes_table, get_window_sizes_file())
+
+    print("Saved to file: " .. get_window_sizes_file())
 end
 
 
@@ -43,7 +53,7 @@ end
 local function circle_table_ring_buffer()
     window_sizes_table.size = window_sizes_table.size + 1
     -- remove oldest items 
-    local MAX_SAVE_SIZE = 400
+    local MAX_SAVE_SIZE = 800
     local REMOVE_ITEM_COUNT = 10
 
     if window_sizes_table.size > MAX_SAVE_SIZE then

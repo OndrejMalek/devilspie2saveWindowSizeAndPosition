@@ -1,13 +1,21 @@
-cwd = debug.getinfo(1).source:match("@?(.*/)")
-dofile( cwd.."lib/table.save-1.0.lua" )
-local commons = dofile(cwd.."lib/save_window_state_commons.lua")
+function nil_to_str( str )
+    if str == nil then
+        return ""
+    else
+        return str
+    end
+end
+
+cwd = nil_to_str(debug.getinfo(1).source:match("@?(.*/)"))
+dofile(cwd.."lib/table.save-1.0.lua")
+dofile(cwd.."lib/save_window_state_commons.lua")
 
 local window_sizes_table,err = table.load(get_window_sizes_file())
 if window_sizes_table == nil then
     window_sizes_table = {}
 end
 
-saved_state =  window_sizes_table[format_window_size_db_key()]
+saved_state = window_sizes_table[format_window_size_db_key()]
 if saved_state ~= nil then
     set_window_geometry( 
         saved_state.get_window_geometry[1],
