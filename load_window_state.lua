@@ -14,9 +14,13 @@ local window_sizes_table,err = table.load(get_window_sizes_file())
 if window_sizes_table == nil then
     window_sizes_table = {}
 end
+key = format_window_size_db_key()
+saved_state = window_sizes_table[key]
+print("Loading window state with key = " .. key .. " ")
 
-saved_state = window_sizes_table[format_window_size_db_key()]
 if saved_state ~= nil then
+    tprint(saved_state)
+
     set_window_geometry( 
         saved_state.get_window_geometry[1],
         saved_state.get_window_geometry[2],
@@ -36,5 +40,9 @@ if saved_state ~= nil then
         maximize_horizontally() 
     end
 
-
+else
+    print("no state found")
 end
+
+print("")
+

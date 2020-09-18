@@ -11,6 +11,7 @@ cwd = nil_to_str(debug.getinfo(1).source:match("@?(.*/)"))
 dofile(cwd.."lib/table.save-1.0.lua")
 dofile(cwd.."lib/save_window_state_commons.lua")
 
+
 local function save_to_file(key)
     curent_state =  {
         index = window_sizes_table.index,
@@ -34,8 +35,10 @@ local function save_to_file(key)
     window_sizes_table[ key ] = curent_state
     
     table.save(window_sizes_table, get_window_sizes_file())
-
+    print("New window state with key = " .. key .. " :")
+    tprint(curent_state)
     print("Saved to file: " .. get_window_sizes_file())
+    print(" ")
 end
 
 
@@ -97,11 +100,13 @@ function exists(file)
  end
 
 
-if not isdir("saved_state") then
-    os.execute("mkdir saved_state")
+if not isdir(get_window_sizes_file_dir()) then
+    os.execute("mkdir -p " .. get_window_sizes_file_dir())
 end
 
-window_sizes_table,err = table.load(get_window_sizes_file())
+if exists(get_window_sizes_file()) then
+    window_sizes_table,err = table.load(get_window_sizes_file())
+end
 if window_sizes_table == nil then
     window_sizes_table = {}
 end
